@@ -1,0 +1,62 @@
+import java.util.Scanner;
+public class OperationNumbers {
+
+    public int FixTheFormula(String input1) {
+        StringBuilder digits = new StringBuilder();
+        StringBuilder operators = new StringBuilder();
+
+        for (char ch : input1.toCharArray()) 
+        {
+            if (Character.isDigit(ch)) 
+            {
+                digits.append(ch);
+            } else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+                operators.append(ch);
+            }
+        }
+        
+        if (operators.length() != digits.length() - 1)
+        {
+            throw new IllegalArgumentException("Invalid input string");
+        }
+
+        int[] nums = new int[digits.length()];
+        for (int i = 0; i < digits.length(); i++) {
+            nums[i] = digits.charAt(i) - '0';
+        }
+
+        int result = nums[0];
+        for (int i = 0; i < operators.length(); i++) 
+        {
+            char op = operators.charAt(i);
+            int nextNum = nums[i + 1];
+            switch (op) 
+            {
+                case '+':
+                    result += nextNum;
+                    break;
+                case '-':
+                    result -= nextNum;
+                    break;
+                case '*':
+                    result *= nextNum;
+                    break;
+                case '/':
+                    result /= nextNum;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid operator");
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String str=sc.nextLine();
+        OperationNumbers op=new OperationNumbers();
+        int answer=op.FixTheFormula(str);
+        System.out.println(answer);
+}
+}
